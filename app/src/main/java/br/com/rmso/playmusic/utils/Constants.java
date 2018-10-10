@@ -5,5 +5,8 @@ package br.com.rmso.playmusic.utils;
  */
 
 public class Constants {
-    public static String artistsUrl = "https://api.deezer.com/genre/0/artists";
+    public static String baseUrl = "https://api.deezer.com/";
+    public static String genreUrl = "https://api.deezer.com/genre/";
+    public static String bundleGenre = "genre";
+    public static String bundleArtist = "artist";
 }

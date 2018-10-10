@@ -1,10 +1,16 @@
 package br.com.rmso.playmusic.models;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
 /**
  * Created by Raquel on 06/10/2018.
  */
 
 public class Track {
+    @SerializedName("data")
+    private List<Track> trackList;
     private int id;
     private boolean readable;
     private String title;
@@ -15,8 +21,9 @@ public class Track {
     private int rank;
     private boolean explicit_lyrics;
     private String preview;
-    private Artist artist;
     private Album album;
+    private int imagePlay;
+    private boolean isPlaying;
 
     public int getId() {
         return id;
@@ -98,12 +105,12 @@ public class Track {
         this.preview = preview;
     }
 
-    public Artist getArtist() {
-        return artist;
+    public List<Track> getTrackList() {
+        return trackList;
     }
 
-    public void setArtist(Artist artist) {
-        this.artist = artist;
+    public void setTrackList(List<Track> trackList) {
+        this.trackList = trackList;
     }
 
     public Album getAlbum() {
@@ -112,5 +119,21 @@ public class Track {
 
     public void setAlbum(Album album) {
         this.album = album;
+    }
+
+    public int getImagePlay() {
+        return imagePlay;
+    }
+
+    public void setImagePlay(int imagePlay) {
+        this.imagePlay = imagePlay;
+    }
+
+    public boolean isPlaying() {
+        return isPlaying;
+    }
+
+    public void setPlaying(boolean playing) {
+        isPlaying = playing;
     }
 }

@@ -1,10 +1,19 @@
 package br.com.rmso.playmusic.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
 /**
  * Created by Raquel on 06/10/2018.
  */
 
-public class Artist {
+public class Artist implements Parcelable {
+    @SerializedName("data")
+    private List<Artist> artistsList;
     private int id;
     private String name;
     private String picture;
@@ -12,8 +21,29 @@ public class Artist {
     private String picture_medium;
     private String picture_big;
     private String picture_xl;
+    private int nb_album;
+    private int nb_fan;
     private boolean radio;
-    private Track tracklist;
+    private String tracklist;
+
+    public Artist (){
+
+    }
+
+    public Artist(Parcel in) {
+        id = in.readInt();
+        name = in.readString();
+        picture = in.readString();
+        picture_small = in.readString();
+        picture_medium = in.readString();
+        picture_big = in.readString();
+        picture_xl = in.readString();
+        nb_album = in.readInt();
+        nb_fan = in.readInt();
+        radio = in.readByte() != 0;
+        tracklist = in.readString();
+
+    }
 
     public int getId() {
         return id;
@@ -71,6 +101,22 @@ public class Artist {
         this.picture_xl = picture_xl;
     }
 
+    public int getNb_album() {
+        return nb_album;
+    }
+
+    public void setNb_album(int nb_album) {
+        this.nb_album = nb_album;
+    }
+
+    public int getNb_fan() {
+        return nb_fan;
+    }
+
+    public void setNb_fan(int nb_fan) {
+        this.nb_fan = nb_fan;
+    }
+
     public boolean isRadio() {
         return radio;
     }
@@ -79,11 +125,51 @@ public class Artist {
         this.radio = radio;
     }
 
-    public Track getTracklist() {
+    public String getTracklist() {
         return tracklist;
     }
 
-    public void setTracklist(Track tracklist) {
+    public void setTracklist(String tracklist) {
         this.tracklist = tracklist;
+    }
+
+    public List<Artist> getArtistsList() {
+        return artistsList;
+    }
+
+    public void setArtistsList(List<Artist> artistsList) {
+        this.artistsList = artistsList;
+    }
+
+    public static final Parcelable.Creator<Artist> CREATOR = new Parcelable.Creator<Artist>() {
+        @Override
+        public Artist createFromParcel(Parcel in) {
+            return new Artist(in);
+        }
+
+        @Override
+        public Artist[] newArray(int size) {
+            return new Artist[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return hashCode();
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int flags) {
+        parcel.writeInt(id);
+        parcel.writeString(name);
+        parcel.writeString(picture);
+        parcel.writeString(picture_small);
+        parcel.writeString(picture_medium);
+        parcel.writeString(picture_big);
+        parcel.writeString(picture_xl);
+        parcel.writeInt(nb_album);
+        parcel.writeInt(nb_fan);
+        parcel.writeByte((byte) (radio ? 1 : 0));
+        parcel.writeString(tracklist);
     }
 }

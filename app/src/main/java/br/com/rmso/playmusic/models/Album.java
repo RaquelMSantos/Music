@@ -1,18 +1,26 @@
 package br.com.rmso.playmusic.models;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by Raquel on 07/10/2018.
  */
 
 public class Album {
+    @SerializedName("id")
     private int id;
+    @SerializedName("title")
     private String title;
+    @SerializedName("cover")
     private String cover;
+    @SerializedName("cover_small")
     private String cover_small;
+    @SerializedName("cover_medium")
     private String cover_medium;
+    @SerializedName("cover_big")
     private String cover_big;
+    @SerializedName("cover_xl")
     private String cover_xl;
-    private Track tracklist;
 
     public int getId() {
         return id;
@@ -70,11 +78,4 @@ public class Album {
         this.cover_xl = cover_xl;
     }
 
-    public Track getTracklist() {
-        return tracklist;
-    }
-
-    public void setTracklist(Track tracklist) {
-        this.tracklist = tracklist;
-    }
 }

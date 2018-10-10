@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">PlayMusic</string>
+    <string name="genre_name">Pop</string>
+    <string name="artist_name">Melim</string>
+    <string name="title_genre">Gênero</string>
+    <string name="title_fan">Seguidores</string>
+    <string name="title_album">Álbuns</string>
+    <string name="number_fan">653200 Seguidores</string>
+    <string name="number_album">15 Álbuns</string>
+    <string name="title_music">Músicas</string>
+    <string name="music_name">Notificação Preferida</string>
+    <string name="album_name">Esquece o mundo lá fora</string>
+    <string name="number_rank">953332</string>
+    <string name="number_music_order">1</string>
 </resources>
