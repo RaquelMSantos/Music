@@ -7,6 +7,14 @@
     android:background="#CC000000"
     android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/tv_music_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/white"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,16 +23,24 @@
         android:orientation="horizontal">
 
         <ImageButton android:id="@id/exo_prev"
-            style="@style/ExoMediaButton.Previous"/>
+            style="@style/ExoMediaButton.Previous"
+            android:clickable="false"
+            android:tint="@color/grey"/>
 
         <ImageButton android:id="@id/exo_play"
-            style="@style/ExoMediaButton.Play"/>
+            style="@style/ExoMediaButton.Play"
+            android:clickable="false"
+            android:tint="@color/grey"/>
 
         <ImageButton android:id="@id/exo_pause"
-            style="@style/ExoMediaButton.Pause"/>
+            style="@style/ExoMediaButton.Pause"
+            android:clickable="false"
+            android:tint="@color/grey"/>
 
         <ImageButton android:id="@id/exo_next"
-            style="@style/ExoMediaButton.Next"/>
+            style="@style/ExoMediaButton.Next"
+            android:clickable="false"
+            android:tint="@color/grey"/>
 
     </LinearLayout>
 
@@ -43,7 +59,7 @@
             android:paddingLeft="4dp"
             android:paddingRight="4dp"
             android:includeFontPadding="false"
-            android:textColor="#FFBEBEBE"/>
+            android:textColor="@color/white"/>
 
         <SeekBar android:id="@id/exo_progress"
             android:layout_width="0dp"
@@ -60,7 +76,7 @@
             android:paddingLeft="4dp"
             android:paddingRight="4dp"
             android:includeFontPadding="false"
-            android:textColor="#FFBEBEBE"/>
+            android:textColor="@color/white"/>
 
     </LinearLayout>
 
