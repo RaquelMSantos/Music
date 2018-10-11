@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".views.activities.DetailArtistActivity">
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -55,9 +55,30 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_musics"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/tv_music"
         android:layout_marginLeft="10dp"
+        android:layout_above="@id/playerView"
+        android:layout_marginBottom="10dp"
         android:layout_marginTop="5dp" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btn_play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/baseline_play_circle_outline_black_24"
+        android:layout_above="@id/playerView"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        app:fabSize="normal"/>
+
+    <com.google.android.exoplayer2.ui.SimpleExoPlayerView
+        android:id="@+id/playerView"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        app:fastforward_increment="1000"
+        app:rewind_increment="1000"/>
 
 </RelativeLayout>

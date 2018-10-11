@@ -42,7 +42,10 @@ dependencies {
     }
     //CircleImageView
     implementation 'de.hdodenhof:circleimageview:2.2.0'
+    //Exoplayer
+    compile 'com.google.android.exoplayer:exoplayer:2.8.0'
     //Retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.4.0'
 }
