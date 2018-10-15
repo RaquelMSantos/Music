@@ -1,4 +1,4 @@
-package br.com.rmso.playmusic.models;
+package br.com.rmso.playmusic.service.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

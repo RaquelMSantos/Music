@@ -1,8 +1,8 @@
-package br.com.rmso.playmusic.utils;
+package br.com.rmso.playmusic.service.repository;
 
-import br.com.rmso.playmusic.models.Artist;
-import br.com.rmso.playmusic.models.Genre;
-import br.com.rmso.playmusic.models.Track;
+import br.com.rmso.playmusic.service.model.Artist;
+import br.com.rmso.playmusic.service.model.Genre;
+import br.com.rmso.playmusic.service.model.Track;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;

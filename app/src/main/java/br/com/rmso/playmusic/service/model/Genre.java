@@ -1,4 +1,4 @@
-package br.com.rmso.playmusic.models;
+package br.com.rmso.playmusic.service.model;
 
 import com.google.gson.annotations.SerializedName;
 

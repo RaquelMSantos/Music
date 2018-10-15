@@ -16,6 +16,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
 }
 
 dependencies {
@@ -43,9 +47,13 @@ dependencies {
     //CircleImageView
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     //Exoplayer
-    compile 'com.google.android.exoplayer:exoplayer:2.8.0'
+    implementation 'com.google.android.exoplayer:exoplayer:2.8.0'
     //Retrofit
-    compile 'com.squareup.retrofit2:retrofit:2.1.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.4.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.1.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.4.0'
+    //Arch Components
+    implementation 'android.arch.lifecycle:runtime:1.1.1'
+    implementation 'android.arch.lifecycle:extensions:1.1.1'
+    annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
 }

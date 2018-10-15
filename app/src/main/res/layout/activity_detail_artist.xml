@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".views.activities.DetailArtistActivity">
+    tools:context=".view.ui.DetailArtistActivity">
 
     <ImageView
         android:id="@+id/img_profile_artist"

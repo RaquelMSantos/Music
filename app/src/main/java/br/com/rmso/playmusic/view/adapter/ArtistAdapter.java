@@ -1,4 +1,4 @@
-package br.com.rmso.playmusic.views.adapters;
+package br.com.rmso.playmusic.view.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -13,10 +13,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import br.com.rmso.playmusic.AdapterOnclick;
-import br.com.rmso.playmusic.ArtistAdapterOnclick;
+import br.com.rmso.playmusic.view.callback.ArtistAdapterOnclick;
 import br.com.rmso.playmusic.R;
-import br.com.rmso.playmusic.models.Artist;
+import br.com.rmso.playmusic.service.model.Artist;
 
 public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistViewHolder>{
 
@@ -43,6 +42,8 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistView
         holder.mArtistNameTextView.setText(artist.getName());
         Picasso.with(mContext)
                 .load(artist.getPicture_xl())
+                .placeholder(R.drawable.placeholder_image)
+                .error(R.drawable.placeholder_image_error)
                 .into(holder.mArtistCoverImageView);
     }
 

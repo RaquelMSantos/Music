@@ -1,4 +1,4 @@
-package br.com.rmso.playmusic.views.activities;
+package br.com.rmso.playmusic.view.ui;
 
 import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
@@ -14,7 +14,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlaybackException;
@@ -36,18 +35,15 @@ import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
-import br.com.rmso.playmusic.AdapterOnclick;
 import br.com.rmso.playmusic.R;
-import br.com.rmso.playmusic.models.Artist;
-import br.com.rmso.playmusic.models.Track;
-import br.com.rmso.playmusic.utils.Constants;
-import br.com.rmso.playmusic.utils.GenreClient;
-import br.com.rmso.playmusic.utils.Utility;
-import br.com.rmso.playmusic.views.adapters.MusicAdapter;
+import br.com.rmso.playmusic.service.model.Artist;
+import br.com.rmso.playmusic.service.model.Track;
+import br.com.rmso.playmusic.util.Constants;
+import br.com.rmso.playmusic.service.repository.GenreClient;
+import br.com.rmso.playmusic.util.Utility;
+import br.com.rmso.playmusic.view.adapter.MusicAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;

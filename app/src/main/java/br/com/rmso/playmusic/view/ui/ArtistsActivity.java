@@ -1,5 +1,6 @@
-package br.com.rmso.playmusic.views.activities;
+package br.com.rmso.playmusic.view.ui;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.widget.DrawerLayout;
@@ -10,7 +11,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -19,19 +19,15 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-import br.com.rmso.playmusic.ArtistAdapterOnclick;
+import br.com.rmso.playmusic.view.callback.ArtistAdapterOnclick;
 import br.com.rmso.playmusic.R;
-import br.com.rmso.playmusic.models.Artist;
-import br.com.rmso.playmusic.models.Genre;
-import br.com.rmso.playmusic.utils.Constants;
-import br.com.rmso.playmusic.utils.GenreClient;
-import br.com.rmso.playmusic.utils.Utility;
-import br.com.rmso.playmusic.views.adapters.ArtistAdapter;
+import br.com.rmso.playmusic.service.model.Artist;
+import br.com.rmso.playmusic.util.Constants;
+import br.com.rmso.playmusic.util.Utility;
+import br.com.rmso.playmusic.view.adapter.ArtistAdapter;
+import br.com.rmso.playmusic.viewmodel.ArtistViewModel;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class ArtistsActivity extends AppCompatActivity implements ArtistAdapterOnclick {
 
@@ -50,7 +46,6 @@ public class ArtistsActivity extends AppCompatActivity implements ArtistAdapterO
     private ArrayList<Artist> mArtistList;
     private GridLayoutManager mLayoutManager;
     private Drawer.Result navigationDrawerLeft;
-    private Genre mCurrentGenre;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +55,7 @@ public class ArtistsActivity extends AppCompatActivity implements ArtistAdapterO
 
         Intent intent = getIntent();
         genrePosition = intent.getIntExtra(Constants.bundleGenre, 0);
-        mCurrentGenre = Utility.mCurrentGenreList.get(genrePosition);
+        Utility.mCurrentGenre = Utility.mCurrentGenreList.get(genrePosition);
 
         mColllapsingToolbarLayout.setTitle(Utility.mCurrentGenreList.get(genrePosition).getName());
         mToolbar.setTitle(Utility.mCurrentGenreList.get(genrePosition).getName());
@@ -79,10 +74,8 @@ public class ArtistsActivity extends AppCompatActivity implements ArtistAdapterO
         mArtistsRecyclerView.setAdapter(mArtistAdapter);
 
         Picasso.with(this)
-                .load(mCurrentGenre.getPicture_xl())
+                .load(Utility.mCurrentGenre.getPicture_xl())
                 .into(mGenreImageView);
-
-        loadArtistJson();
 
         navigationDrawerLeft = new Drawer()
                 .withActivity(this)
@@ -99,6 +92,14 @@ public class ArtistsActivity extends AppCompatActivity implements ArtistAdapterO
                     }
                 })
                 .build();
+
+        ArtistViewModel artistViewModel = ViewModelProviders.of(this).get(ArtistViewModel.class);
+        artistViewModel.getArtists().observe(this, artists -> {
+            if (artists != null) {
+                mArtistAdapter.setArtist(artists);
+                mArtistAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
     private int numberOfColumns(){
@@ -116,24 +117,5 @@ public class ArtistsActivity extends AppCompatActivity implements ArtistAdapterO
         Intent intent = new Intent(this, DetailArtistActivity.class);
         intent.putExtra(Constants.bundleArtist, artistClicked);
         startActivity(intent);
-    }
-
-    private void loadArtistJson(){
-        Call<Artist> call = new GenreClient().getGenreService().getArtist(mCurrentGenre.getId());
-
-        call.enqueue(new Callback<Artist>() {
-            @Override
-            public void onResponse(Call<Artist> call, Response<Artist> response) {
-                Artist artist = response.body();
-                Utility.mCurrentArtistList = artist.getArtistsList();
-                mArtistAdapter.setArtist(Utility.mCurrentArtistList);
-                mArtistAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onFailure(Call<Artist> call, Throwable t) {
-                Log.e("GenreService","Error:" + t.getMessage());
-            }
-        });
     }
 }

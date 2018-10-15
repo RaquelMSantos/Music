@@ -1,4 +1,4 @@
-package br.com.rmso.playmusic.views.adapters;
+package br.com.rmso.playmusic.view.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -14,9 +14,9 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.rmso.playmusic.AdapterOnclick;
+import br.com.rmso.playmusic.view.callback.AdapterOnclick;
 import br.com.rmso.playmusic.R;
-import br.com.rmso.playmusic.models.Genre;
+import br.com.rmso.playmusic.service.model.Genre;
 
 public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.GenreViewHolder>{
 
@@ -43,16 +43,14 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.GenreViewHol
         holder.mGenreNameTextView.setText(genre.getName());
         Picasso.with(mContext)
                 .load(genre.getPicture_xl())
+                .placeholder(R.drawable.placeholder_image)
+                .error(R.drawable.placeholder_image_error)
                 .into(holder.mGenreCoverImageView);
     }
 
     @Override
     public int getItemCount() {
        if (mGenreList != null) return mGenreList.size(); else return 0;
-    }
-
-    public List<Genre> getGenre(){
-        return mGenreList;
     }
 
     public void setGenre(List<Genre> genreList){

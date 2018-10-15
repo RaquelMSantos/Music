@@ -1,4 +1,4 @@
-package br.com.rmso.playmusic.views.adapters;
+package br.com.rmso.playmusic.view.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -10,9 +10,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.rmso.playmusic.AdapterOnclick;
 import br.com.rmso.playmusic.R;
-import br.com.rmso.playmusic.models.Track;
+import br.com.rmso.playmusic.service.model.Track;
 
 public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHolder> {
 
@@ -40,10 +39,6 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
     @Override
     public int getItemCount() {
         if (mTrackList != null) return mTrackList.size(); else return 0;
-    }
-
-    public List<Track> getTrack(){
-        return mTrackList;
     }
 
     public void setTrack(List<Track> trackList){
