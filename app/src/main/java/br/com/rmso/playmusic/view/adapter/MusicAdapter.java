@@ -1,5 +1,7 @@
 package br.com.rmso.playmusic.view.adapter;
 
+import android.content.Context;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,9 +18,11 @@ import br.com.rmso.playmusic.service.model.Track;
 public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHolder> {
 
     private List<Track> mTrackList;
+    private Context mContext;
 
-    public MusicAdapter (ArrayList<Track> trackList){
+    public MusicAdapter (ArrayList<Track> trackList, Context context){
         mTrackList = trackList;
+        mContext = context;
     }
 
     @NonNull
@@ -34,6 +38,12 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
         holder.mMusicOrderTextView.setText(position+1 + "");
         holder.mMusicNameTextView.setText(track.getTitle());
         holder.mAlbumNameTextView.setText(track.getAlbum().getTitle());
+
+        Typeface custom_font_roboto_bold = Typeface.createFromAsset(mContext.getAssets(),  "Roboto-Bold.ttf");
+        holder.mMusicNameTextView.setTypeface(custom_font_roboto_bold);
+        Typeface custom_font_roboto_regular = Typeface.createFromAsset(mContext.getAssets(),  "Roboto-Regular.ttf");
+        holder.mMusicOrderTextView.setTypeface(custom_font_roboto_regular);
+        holder.mAlbumNameTextView.setTypeface(custom_font_roboto_regular);
     }
 
     @Override

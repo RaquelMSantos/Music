@@ -2,7 +2,7 @@
     <string name="app_name">PlayMusic</string>
     <string name="genre_name">Pop</string>
     <string name="artist_name">Melim</string>
-    <string name="title_genre">Gênero</string>
+    <string name="title_genre">Gêneros</string>
     <string name="title_fan">Seguidores</string>
     <string name="title_album">Álbuns</string>
     <string name="number_fan">653200 Seguidores</string>

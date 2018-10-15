@@ -1,5 +1,7 @@
 package br.com.rmso.playmusic.view.ui;
 
+import android.content.res.ColorStateList;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.media.session.MediaSessionCompat;
@@ -9,6 +11,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -34,6 +37,8 @@ import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 import com.squareup.picasso.Picasso;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -81,15 +86,18 @@ public class DetailArtistActivity extends AppCompatActivity implements ExoPlayer
     TextView mExoDurationTextView;
     @BindView(R.id.tv_music_name)
     TextView mMusicNameTextView;
+    @BindView(R.id.playerView)
+    SimpleExoPlayerView mPlayerView;
+    @BindView(R.id.tv_music)
+    TextView mMusicTitleTextView;
 
     private Artist artist;
     private MusicAdapter mMusicAdapter;
     private ArrayList<Track> mTrackList;
     private static final String TAG = DetailArtistActivity.class.getSimpleName();
     private int position = 0;
-
     private SimpleExoPlayer mExoPlayer;
-    private SimpleExoPlayerView mPlayerView;
+
     private MediaSessionCompat mMediaSession;
     private PlaybackStateCompat.Builder mStateBuilder;
 
@@ -103,10 +111,18 @@ public class DetailArtistActivity extends AppCompatActivity implements ExoPlayer
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mMusicRecyclerView.setLayoutManager(layoutManager);
         mMusicRecyclerView.setHasFixedSize(true);
-        mMusicAdapter = new MusicAdapter(mTrackList);
+        mMusicAdapter = new MusicAdapter(mTrackList, this);
         mMusicRecyclerView.setAdapter(mMusicAdapter);
 
-        mPlayerView = findViewById(R.id.playerView);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
+        Typeface custom_font_roboto_bold = Typeface.createFromAsset(getAssets(),  "Roboto-Bold.ttf");
+        mArtistNameTextView.setTypeface(custom_font_roboto_bold);
+        Typeface custom_font_roboto_regular = Typeface.createFromAsset(getAssets(),  "Roboto-Regular.ttf");
+        mFanTextView.setTypeface(custom_font_roboto_regular);
+        mAlbumTextView.setTypeface(custom_font_roboto_regular);
+        mMusicTitleTextView.setTypeface(custom_font_roboto_bold);
 
         artist = getIntent().getExtras().getParcelable(Constants.bundleArtist);
 
@@ -114,6 +130,8 @@ public class DetailArtistActivity extends AppCompatActivity implements ExoPlayer
             mArtistNameTextView.setText(artist.getName());
             Picasso.with(this)
                     .load(artist.getPicture_xl())
+                    .placeholder(R.drawable.placeholder_image)
+                    .error(R.drawable.placeholder_image_error)
                     .into(mArtistImageView);
             loadDetailArtistJson();
             loadTrackJson();
@@ -121,67 +139,56 @@ public class DetailArtistActivity extends AppCompatActivity implements ExoPlayer
 
         initializeMediaSession();
 
-        mPlayFloatingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mMediaSession.setActive(true);
-                mNextButton.setColorFilter(getResources().getColor(R.color.white));
-                mMusicNameTextView.setText(Utility.mCurrentTrackList.get(position).getTitle());
-                initializePlayer(Uri.parse(Utility.mCurrentTrackList.get(position).getPreview()));
-                mPlayFloatingButton.setEnabled(false);
+        mPlayFloatingButton.setOnClickListener(view -> {
+            mMediaSession.setActive(true);
+            mNextButton.setColorFilter(getResources().getColor(R.color.white));
+            mMusicNameTextView.setText(Utility.mCurrentTrackList.get(position).getTitle());
+            initializePlayer(Uri.parse(Utility.mCurrentTrackList.get(position).getPreview()));
+            mPlayFloatingButton.setEnabled(false);
+            mPlayFloatingButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.grey)));
+            mNextButton.setEnabled(true);
+            setStop();
+        });
+
+        mPrevButton.setOnClickListener(view -> {
+            position --;
+            releasePlayer();
+            initializePlayer(Uri.parse(Utility.mCurrentTrackList.get(position).getPreview()));
+            mMusicNameTextView.setText(Utility.mCurrentTrackList.get(position).getTitle());
+            if (position == 0){
+                mPrevButton.setEnabled(false);
+                mPrevButton.setColorFilter(getResources().getColor(R.color.grey));
+            }if (position != 49){
                 mNextButton.setEnabled(true);
-                setStop();
+                mNextButton.setColorFilter(getResources().getColor(R.color.white));
             }
+            if (mExoPlayer.getPlayWhenReady()) setStop(); else setPlay();
         });
 
-        mPrevButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                position --;
-                releasePlayer();
-                initializePlayer(Uri.parse(Utility.mCurrentTrackList.get(position).getPreview()));
-                mMusicNameTextView.setText(Utility.mCurrentTrackList.get(position).getTitle());
-                if (position == 0){
-                    mPrevButton.setEnabled(false);
-                    mPrevButton.setColorFilter(getResources().getColor(R.color.grey));
-                }
-                if (mExoPlayer.getPlayWhenReady()) setStop(); else setPlay();
-            }
+        mPlayButton.setOnClickListener(view -> {
+            mExoPlayer.setPlayWhenReady(true);
+            setStop();
         });
 
-        mPlayButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mExoPlayer.setPlayWhenReady(true);
-                setStop();
-            }
+        mPauseButton.setOnClickListener(view -> {
+            mExoPlayer.setPlayWhenReady(false);
+            setPlay();
         });
 
-        mPauseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mExoPlayer.setPlayWhenReady(false);
-                setPlay();
+        mNextButton.setOnClickListener(view -> {
+            position ++;
+            mMusicNameTextView.setText(Utility.mCurrentTrackList.get(position).getTitle());
+            if (mExoPlayer.getPlayWhenReady()) setStop(); else setPlay();
+            if (position != 0){
+                mPrevButton.setEnabled(true);
+                mPrevButton.setColorFilter(getResources().getColor(R.color.white));
             }
-        });
-
-        mNextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                position ++;
-                mMusicNameTextView.setText(Utility.mCurrentTrackList.get(position).getTitle());
-                if (mExoPlayer.getPlayWhenReady()) setStop(); else setPlay();
-                if (position != 0){
-                    mPrevButton.setEnabled(true);
-                    mPrevButton.setColorFilter(getResources().getColor(R.color.white));
-                }
-                if (position == 49){
-                    mNextButton.setEnabled(false);
-                    mNextButton.setColorFilter(getResources().getColor(R.color.grey));
-                }
-                releasePlayer();
-                initializePlayer(Uri.parse(Utility.mCurrentTrackList.get(position).getPreview()));
+            if (position == 49){
+                mNextButton.setEnabled(false);
+                mNextButton.setColorFilter(getResources().getColor(R.color.grey));
             }
+            releasePlayer();
+            initializePlayer(Uri.parse(Utility.mCurrentTrackList.get(position).getPreview()));
         });
     }
 
@@ -209,6 +216,7 @@ public class DetailArtistActivity extends AppCompatActivity implements ExoPlayer
         mNextButton.setEnabled(false);
         mPrevButton.setEnabled(false);
         mPlayFloatingButton.setEnabled(true);
+        mPlayFloatingButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorAccent)));
     }
 
     private void loadDetailArtistJson(){
@@ -277,13 +285,20 @@ public class DetailArtistActivity extends AppCompatActivity implements ExoPlayer
 
             mExoPlayer.addListener(this);
 
-            String userAgent = Util.getUserAgent(this, "ClassicalMusicQuiz");
+            String userAgent = Util.getUserAgent(this, "PlayMusic");
             MediaSource mediaSource = new ExtractorMediaSource(mediaUri, new DefaultDataSourceFactory(
                     this, userAgent), new DefaultExtractorsFactory(), null, null);
             mExoPlayer.prepare(mediaSource);
             mExoPlayer.setPlayWhenReady(true);
         }
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        super.onBackPressed();
+        return false;
+    }
+
 
     @Override
     protected void onDestroy() {

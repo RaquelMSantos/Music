@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/colorPrimaryDark"
     tools:context="br.com.rmso.playmusic.view.ui.MainActivity">
 
    <TextView
@@ -14,12 +15,15 @@
        android:text="@string/title_genre"
        android:gravity="center_horizontal"
        android:elevation="10dp"
-       android:padding="10dp"/>
+       android:textSize="20sp"
+       android:textColor="@color/white"
+       android:layout_marginTop="5dp"/>
 
    <android.support.v7.widget.RecyclerView
        android:id="@+id/rv_genre"
-       android:padding="10dp"
        android:layout_below="@id/tv_title_genre"
+       android:layout_centerHorizontal="true"
+       android:padding="20dp"
        android:layout_width="match_parent"
        android:layout_height="match_parent"/>
 

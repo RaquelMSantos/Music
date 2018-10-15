@@ -1,6 +1,7 @@
 package br.com.rmso.playmusic.view.adapter;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -46,6 +47,9 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.GenreViewHol
                 .placeholder(R.drawable.placeholder_image)
                 .error(R.drawable.placeholder_image_error)
                 .into(holder.mGenreCoverImageView);
+
+        Typeface custom_font_roboto_regular = Typeface.createFromAsset(mContext.getAssets(),  "Roboto-Regular.ttf");
+        holder.mGenreNameTextView.setTypeface(custom_font_roboto_regular);
     }
 
     @Override

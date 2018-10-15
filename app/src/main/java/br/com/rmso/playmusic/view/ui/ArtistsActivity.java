@@ -2,6 +2,8 @@ package br.com.rmso.playmusic.view.ui;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.Typeface;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -57,8 +59,14 @@ public class ArtistsActivity extends AppCompatActivity implements ArtistAdapterO
         genrePosition = intent.getIntExtra(Constants.bundleGenre, 0);
         Utility.mCurrentGenre = Utility.mCurrentGenreList.get(genrePosition);
 
+        Typeface custom_font_roboto_regular = Typeface.createFromAsset(getAssets(),  "Roboto-Regular.ttf");
+        mColllapsingToolbarLayout.setCollapsedTitleTypeface(custom_font_roboto_regular);
+        mColllapsingToolbarLayout.setCollapsedTitleTextColor(getResources().getColor(R.color.white));
+        mColllapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(R.color.white));
+
         mColllapsingToolbarLayout.setTitle(Utility.mCurrentGenreList.get(genrePosition).getName());
         mToolbar.setTitle(Utility.mCurrentGenreList.get(genrePosition).getName());
+        mToolbar.setNavigationIcon(getResources().getDrawable(R.drawable.baseline_keyboard_backspace_white_24));
         setSupportActionBar(mToolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

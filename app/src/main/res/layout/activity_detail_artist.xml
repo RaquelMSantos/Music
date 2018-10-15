@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.ui.DetailArtistActivity">
 
     <ImageView
         android:id="@+id/img_profile_artist"
-        android:layout_width="match_parent"
-        android:layout_height="180dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_alignParentLeft="true"
         android:scaleType="fitCenter"
         android:adjustViewBounds="true"
         android:layout_alignParentTop="true"/>
@@ -19,25 +21,37 @@
         android:id="@+id/tv_artist_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/img_profile_artist"
-        tools:text="@string/artist_name"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"/>
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_toRightOf="@id/img_profile_artist"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        tools:text="@string/artist_name" />
     
     <TextView
         android:id="@+id/tv_fan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@id/img_profile_artist"
         android:layout_below="@id/tv_artist_name"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/white"
+        android:textSize="10sp"
         tools:text="@string/number_fan"/>
 
     <TextView
         android:id="@+id/tv_album"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_below="@id/tv_fan"
+        android:layout_toRightOf="@id/img_profile_artist"
+        android:textColor="@color/white"
+        android:layout_marginLeft="20dp"
+        android:layout_centerHorizontal="true"
+        android:textSize="10sp"
         tools:text="@string/number_album"/>
 
     <TextView
@@ -45,7 +59,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/title_music"
-        android:layout_below="@id/tv_album"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:layout_below="@id/img_profile_artist"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"/>
 
@@ -59,16 +75,16 @@
         android:layout_marginBottom="10dp"
         android:layout_marginTop="5dp" />
 
-
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/btn_play"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/baseline_play_circle_outline_black_24"
+        android:src="@drawable/speaker"
         android:layout_above="@id/playerView"
         android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
+        android:background="@color/colorAccent"
         app:fabSize="normal"/>
 
     <com.google.android.exoplayer2.ui.SimpleExoPlayerView
